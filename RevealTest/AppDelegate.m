@@ -8,14 +8,31 @@
 
 #import "AppDelegate.h"
 
+#import "RevealController.h"
+#import "FrontViewController.h"
+#import "RevealViewController.h"
+
 @implementation AppDelegate
 
 @synthesize window = _window;
+@synthesize viewController=_viewController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
+    
+    FrontViewController *frontViewController;
+    RevealViewController *revealViewController;
+    
+    frontViewController=[[FrontViewController alloc] initWithNibName:@"FrontViewController" bundle:nil];
+    revealViewController=[[RevealViewController alloc]initWithNibName:@"RevealViewController" bundle:nil];
+    
+    UINavigationController *navigationController=[[UINavigationController alloc] initWithRootViewController:frontViewController];
+    
+    RevealController *revealController=[[RevealController alloc]initWithFrontViewController:navigationController rearViewController:revealViewController];
+    self.viewController=revealController;
+    
+    self.window.rootViewController=self.viewController;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
